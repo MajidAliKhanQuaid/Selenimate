@@ -1,16 +1,9 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
 using Xunit;
 
 namespace Selenimate.Tests
@@ -20,27 +13,10 @@ namespace Selenimate.Tests
         public string Website { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        //[Fact]
-        //public void TestWithFirefoxDriver()
-        //{
-        //    using (var driver = new FirefoxDriver())
-        //    {
-        //        driver.Navigate().GoToUrl(Website);
-        //        //
-        //        var email = driver.FindElement(By.Id("Email"));
-        //        email.SendKeys(Email);
-        //        //
-        //        var password = driver.FindElement(By.Id("Password"));
-        //        password.SendKeys(Password);
-        //        //
-        //        var submitBtn = driver.FindElement(By.ClassName("login-button"));
-        //        submitBtn.Click();
-        //    }
-        //}
         [Fact]
-        public void TestWithEdgeDriver()
+        public void TestWithFirefoxDriver()
         {
-            using (var driver = new EdgeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)))
+            using (var driver = new FirefoxDriver(Environment.CurrentDirectory))
             {
                 driver.Navigate().GoToUrl(Website);
                 //
@@ -52,12 +28,35 @@ namespace Selenimate.Tests
                 //
                 var submitBtn = driver.FindElement(By.ClassName("login-button"));
                 submitBtn.Click();
+                //
+                var foundDropDown = new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => { return x.FindElement(By.Id("PriceDDL")) != null; });
+                Assert.True(foundDropDown);
+            }
+        }
+        [Fact]
+        public void TestWithEdgeDriver()
+        {
+            using (var driver = new EdgeDriver(Environment.CurrentDirectory))
+            {
+                driver.Navigate().GoToUrl(Website);
+                //
+                var email = driver.FindElement(By.Id("Email"));
+                email.SendKeys(Email);
+                //
+                var password = driver.FindElement(By.Id("Password"));
+                password.SendKeys(Password);
+                //
+                var submitBtn = driver.FindElement(By.ClassName("login-button"));
+                submitBtn.Click();
+                //
+                var foundDropDown = new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => { return x.FindElement(By.Id("PriceDDL")) != null; });
+                Assert.True(foundDropDown);
             }
         }
         [Fact]
         public void TestWithChromeDriver()
         {
-            using (var driver = new ChromeDriver())
+            using (var driver = new ChromeDriver(Environment.CurrentDirectory))
             {
                 driver.Navigate().GoToUrl(Website);
                 //
@@ -69,6 +68,9 @@ namespace Selenimate.Tests
                 //
                 var submitBtn = driver.FindElement(By.ClassName("login-button"));
                 submitBtn.Click();
+                //
+                var foundDropDown = new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => { return x.FindElement(By.Id("PriceDDL")) != null; });
+                Assert.True(foundDropDown);
             }
         }
     }
