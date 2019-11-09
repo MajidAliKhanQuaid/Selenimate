@@ -1,4 +1,4 @@
-# Selenimate
+# Selenimate [Class Library]
 
 Use UXunit with Selenium web driver library to enhance the automated test driven development
 
@@ -46,4 +46,10 @@ public void TestWithFirefoxDriver()
         Assert.True(foundDropDown);
     }
 }
+```
+
+To run the test cases, execute
+
+``` ps
+dotnet test
 ```
