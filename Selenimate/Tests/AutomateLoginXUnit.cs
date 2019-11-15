@@ -19,6 +19,7 @@ namespace Selenimate.Tests
         {
             using (var driver = new FirefoxDriver(Environment.CurrentDirectory))
             {
+                // syntax for opening url in firefox , comment by maham
                 driver.Navigate().GoToUrl(Website);
                 //
                 var email = driver.FindElement(By.Id("Email"));
